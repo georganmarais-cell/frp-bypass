@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRP Bypass - Google Account 2026</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔓</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #00d4ff, #7b2ff7, #f107a3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .tab-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #7b2ff7, #f107a3);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px rgba(123, 47, 247, 0.4);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section {
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+
+    .section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #00d4ff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .app-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .app-item:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateX(5px);
+      border-color: rgba(123, 47, 247, 0.5);
+    }
+
+    .app-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .app-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+
+    .download-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .download-item:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(0, 212, 255, 0.5);
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .file-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .file-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .file-type {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 3px;
+    }
+
+    .download-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7b2ff7, #f107a3);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 4px 15px rgba(123, 47, 247, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .tools-section {
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+
+    .tools-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #f107a3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .tool-card {
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 14px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+
+    .tool-card:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-5px);
+      border-color: rgba(247, 7, 163, 0.5);
+    }
+
+    .tool-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .tool-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .tool-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .xml-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .xml-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .xml-item:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(0, 212, 255, 0.5);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.8rem; }
+      .tabs { gap: 8px; }
+      .tab-btn { padding: 12px 20px; font-size: 0.9rem; }
+      .section { padding: 20px; }
+      .download-btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="glass">
+      <h1>🔓 FRP Bypass</h1>
+      <p>Google Account Bypass Tools & Methods - 2026</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('intents')">📱 Intent Links</button>
+      <button class="tab-btn" onclick="showTab('downloads')">⬇️ Downloads</button>
+      <button class="tab-btn" onclick="showTab('tools')">🛠️ Tools</button>
+    </div>
+
+    <!-- INTENT LINKS TAB -->
+    <div id="intents" class="tab-content active">
+      <div class="section glass">
+        <h2>⚡ Main Apps</h2>
+        <div class="app-grid">
+          <a href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🛍️</span>
+            <span class="app-name">Galaxy Store</span>
+          </a>
+          <a href="intent://com.google.android.googlequicksearchbox/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🔍</span>
+            <span class="app-name">Google Quick Search Box</span>
+          </a>
+          <a href="intent://com.android.settings/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">⚙️</span>
+            <span class="app-name">Settings</span>
+          </a>
+          <a href="intent://com.google.android.setupwizard.qrprovision.QrScanActivity/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📷</span>
+            <span class="app-name">QR Scan Activity</span>
+          </a>
+          <a href="intent://com.activitymanager/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📋</span>
+            <span class="app-name">Activity Manager</span>
+          </a>
+          <a href="intent://com.google.android.gms/#Intent;scheme=promote_smartlock_scheme;end" class="app-item" target="_blank">
+            <span class="app-icon">🔐</span>
+            <span class="app-name">Screen Smartlock</span>
+          </a>
+          <a href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📁</span>
+            <span class="app-name">Samsung My Files</span>
+          </a>
+          <a href="intent://com.google.android.youtube/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">▶️</span>
+            <span class="app-name">YouTube</span>
+          </a>
+          <a href="intent://com.android.chrome/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🌐</span>
+            <span class="app-name">Chrome</span>
+          </a>
+          <a href="intent://com.sec.android.app.popupcalculator/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🧮</span>
+            <span class="app-name">Calculator</span>
+          </a>
+          <a href="https://apps.samsung.com/appquery/appDetail.as?appId=com.sec.android.app.sbrowser&cld-000005006635" class="app-item" target="_blank">
+            <span class="app-icon">🕸️</span>
+            <span class="app-name">Samsung Internet</span>
+          </a>
+          <a href="intent://com.rrivenllc.shieldx/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🛡️</span>
+            <span class="app-name">Alliance Shield</span>
+          </a>
+          <a href="https://galaxy.store/setting" class="app-item" target="_blank">
+            <span class="app-icon">🔧</span>
+            <span class="app-name">Android Hidden Settings</span>
+          </a>
+          <a href="intent://com.google.android.gsf.login.LoginActivity/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">👤</span>
+            <span class="app-name">Login Account</span>
+          </a>
+          <a href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🏠</span>
+            <span class="app-name">Home Launcher</span>
+          </a>
+          <a href="tel:*%230*%23/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📞</span>
+            <span class="app-name">*#0*# (Test Mode)</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="section glass">
+        <h2>📲 Other Apps</h2>
+        <div class="app-grid">
+          <a href="intent://com.sec.android.app.modemui.activities.USB.settings/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🔌</span>
+            <span class="app-name">ADB</span>
+          </a>
+          <a href="intent://com.sec.android.app.servicemodeapp/#Intent;scheme=promote_USBSettings_scheme;end" class="app-item" target="_blank">
+            <span class="app-icon">🔧</span>
+            <span class="app-name">USB Setting</span>
+          </a>
+          <a href="https://com.google.android.apps.maps/" class="app-item" target="_blank">
+            <span class="app-icon">🗺️</span>
+            <span class="app-name">Google Maps</span>
+          </a>
+          <a href="intent://com.google.android.apps.googleassistant/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🎤</span>
+            <span class="app-name">Google Assistant</span>
+          </a>
+          <a href="intent://com.google.android.gm/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">✉️</span>
+            <span class="app-name">Gmail</span>
+          </a>
+          <a href="https://galaxystore.samsung.com/detail/com.s9launcher.dir.launcher" class="app-item" target="_blank">
+            <span class="app-icon">🚀</span>
+            <span class="app-name">S9 Launcher</span>
+          </a>
+          <a href="intent://com.android.settings/com.samsung.android.settings.biometrics.fingerprint.FingerprintEntry/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">👆</span>
+            <span class="app-name">Samsung Touch ID</span>
+          </a>
+          <a href="intent://com.samsung.knox.securefolder/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">🔒</span>
+            <span class="app-name">Samsung Secure Folder</span>
+          </a>
+          <a href="intent://com.sec.android.easyMover/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📤</span>
+            <span class="app-name">Smart Switch</span>
+          </a>
+          <a href="intent://com.samsung.android.dialer/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📱</span>
+            <span class="app-name">Samsung Dialer</span>
+          </a>
+          <a href="intent://com.mi.android.globalFileexplorer/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📂</span>
+            <span class="app-name">Mi File Manager</span>
+          </a>
+          <a href="intent://com.xiaomi.midrop/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📲</span>
+            <span class="app-name">Xiaomi ShareMe</span>
+          </a>
+          <a href="intent://com.vivo.easyshare/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📨</span>
+            <span class="app-name">Vivo EasyShare</span>
+          </a>
+          <a href="intent://com.coloros.backuprestore/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">📋</span>
+            <span class="app-name">OPPO Phone Clone</span>
+          </a>
+          <a href="intent://com.infinix.xshare/#Intent;scheme=android-app;end" class="app-item" target="_blank">
+            <span class="app-icon">⚡</span>
+            <span class="app-name">Xshare Mini</span>
+          </a>
+          <a href="https://galaxystore.samsung.com/detail/org.aospstudio.files" class="app-item" target="_blank">
+            <span class="app-icon">📃</span>
+            <span class="app-name">Files Shortcut</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOWNLOADS TAB -->
+    <div id="downloads" class="tab-content">
+      <div class="section glass">
+        <h2>📦 APKs</h2>
+        <div class="download-grid">
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🚀</span>
+              <div>
+                <div class="file-name">Activity Launcher</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Activity_Launcher.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Activity_Launcher.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🛡️</span>
+              <div>
+                <div class="file-name">Alliance Shield</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Alliance_Shield_0.9.16.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Alliance_Shield_0.9.16.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">📦</span>
+              <div>
+                <div class="file-name">Package Manager</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Package_Manager_v7.0.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Package_Manager_v7.0.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🚫</span>
+              <div>
+                <div class="file-name">Package Disabler Pro</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Package_Disabler_Pro_13.5.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Package_Disabler_Pro_13.5.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🔓</span>
+              <div>
+                <div class="file-name">FRP Bypass</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/FRP_Bypass.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/FRP_Bypass.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🤖</span>
+              <div>
+                <div class="file-name">FRP Android 7</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/FRP_Android_7.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/FRP_Android_7.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🎯</span>
+              <div>
+                <div class="file-name">QuickShortcutMaker</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/QuickShortcutMaker.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/QuickShortcutMaker.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🔧</span>
+              <div>
+                <div class="file-name">Test DPC</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Test_DPC.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Test_DPC.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🏠</span>
+              <div>
+                <div class="file-name">Nova Launcher</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Nova_Launcher.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Nova_Launcher.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">⚙️</span>
+              <div>
+                <div class="file-name">Setting</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Setting.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Setting.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">📁</span>
+              <div>
+                <div class="file-name">ES File Explorer</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/ES_File_Explorer_4.2.4.6.4.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/ES_File_Explorer_4.2.4.6.4.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">📤</span>
+              <div>
+                <div class="file-name">Smart Switch Mobile</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Smart_Switch_Mobile_9.5.03.0.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Smart_Switch_Mobile_9.5.03.0.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">💬</span>
+              <div>
+                <div class="file-name">HushSMS</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/HushSMS.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/HushSMS.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🔄</span>
+              <div>
+                <div class="file-name">Phone Clone</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Phone_Clone.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Phone_Clone.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">📊</span>
+              <div>
+                <div class="file-name">Notification Bar</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Notification_Bar_18.5.8.1.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Notification_Bar_18.5.8.1.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🎮</span>
+              <div>
+                <div class="file-name">GAM (Android 5)</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Android_5_GAM.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Android_5_GAM.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🎮</span>
+              <div>
+                <div class="file-name">GAM (Android 6)</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Android_6_GAM.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Android_6_GAM.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="file-info">
+              <span class="file-icon">🎮</span>
+              <div>
+                <div class="file-name">GAM (Android 8-10)</div>
+                <div class="file-type">APK</div>
+              </div>
+            </div>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Android_8-9-10_GAM.apk" class="btn btn-primary" target="_blank">Download</a>
+              <a href="https://addrom.romhub.me/Android_8-9-10_GAM.apk" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section glass">
+        <h2>📄 XML Files</h2>
+        <div class="xml-list">
+          <div class="xml-item">
+            <span class="file-name">Disable_systemUI.xml</span>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Disable_systemUI.xml" class="btn btn-primary" target="_blank">GitHub</a>
+              <a href="https://addrom.romhub.me/Disable_systemUI.xml" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="xml-item">
+            <span class="file-name">Disable_GoogleService.xml</span>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Disable_GoogleService.xml" class="btn btn-primary" target="_blank">GitHub</a>
+              <a href="https://addrom.romhub.me/Disable_GoogleService.xml" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="xml-item">
+            <span class="file-name">Disable_MDM_Knox.xml</span>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Disable_MDM_Knox.xml" class="btn btn-primary" target="_blank">GitHub</a>
+              <a href="https://addrom.romhub.me/Disable_MDM_Knox.xml" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+          <div class="xml-item">
+            <span class="file-name">Disable_PlayServices.xml</span>
+            <div class="download-btns">
+              <a href="https://github.com/addrom/bypass/raw/master/Disable_PlayServices.xml" class="btn btn-primary" target="_blank">GitHub</a>
+              <a href="https://addrom.romhub.me/Disable_PlayServices.xml" class="btn btn-secondary" target="_blank">Backup</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS TAB -->
+    <div id="tools" class="tab-content">
+      <div class="tools-section glass">
+        <h2>🛠️ Additional Tools</h2>
+        <div class="tools-grid">
+          <a href="https://galaxystore.samsung.com/detail/com.rrivenllc.shieldx" class="tool-card" target="_blank">
+            <div class="tool-icon">🛡️</div>
+            <div class="tool-name">Alliance Shield</div>
+            <div class="tool-desc">Galaxy Store</div>
+          </a>
+          <a href="https://galaxystore.samsung.com/detail/org.aospstudio.files" class="tool-card" target="_blank">
+            <div class="tool-icon">📃</div>
+            <div class="tool-name">Files Shortcut</div>
+            <div class="tool-desc">Galaxy Store</div>
+          </a>
+          <a href="https://romhub.io" class="tool-card" target="_blank">
+            <div class="tool-icon">💾</div>
+            <div class="tool-name">Data for addROM-er</div>
+            <div class="tool-desc">FRP Tools Database</div>
+          </a>
+          <a href="https://addrom.com/samfw-frp-tool/" class="tool-card" target="_blank">
+            <div class="tool-icon">🔧</div>
+            <div class="tool-name">SamFW FRP Tool</div>
+            <div class="tool-desc">Online Tool</div>
+          </a>
+          <a href="https://addrom.com/tool-frija-samsung-firmware-downloader-checker/" class="tool-card" target="_blank">
+            <div class="tool-icon">📥</div>
+            <div class="tool-name">Frija Tool</div>
+            <div class="tool-desc">Samsung Firmware Downloader</div>
+          </a>
+          <a href="https://addrom.com/download-mi-flash-pro-tool/" class="tool-card" target="_blank">
+            <div class="tool-icon">📲</div>
+            <div class="tool-name">Mi Flash Pro</div>
+            <div class="tool-desc">Xiaomi Flash Tool</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>FRP Bypass Tools 2026 | For educational purposes only</p>
+      <p style="margin-top:10px">Based on <a href="https://addrom.com/bypass/" target="_blank">addROM</a> & <a href="https://vnrom.net/bypass/" target="_blank">vnROM</a></p>
+    </footer>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
